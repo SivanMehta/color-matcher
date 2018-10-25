@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Square from './square';
+import Slider from './slider';
 
 function randomValue() {
   return Math.floor((Math.random() * 255) / 10) * 10;
@@ -13,7 +14,7 @@ function randomColor() {
   };
 }
 
-export default class App extends Component {
+export default class App extends PureComponent {
   constructor() {
     super(...arguments);
 
@@ -24,6 +25,25 @@ export default class App extends Component {
       ...start,
       goal
     };
+
+    this.reset = this.reset.bind(this);
+    this.setColor = this.setColor.bind(this);
+  }
+
+  reset() {
+    const start = randomColor();
+    const goal = randomColor();
+
+    this.setState({
+      ...start,
+      goal
+    });
+  }
+
+  setColor(value, color) {
+    this.setState({
+      [color]: parseInt(value)
+    });
   }
 
   render() {
@@ -41,6 +61,14 @@ export default class App extends Component {
             <h2 className='text-center'>Actual</h2>
             <Square height={ 100 } width={ 100 } color={ { red, green, blue } }/>
           </div>
+        </div>
+        <div>
+          <Slider value={ red } onChange={ v => this.setColor(v, 'red') }/>
+          <Slider value={ green } onChange={ v => this.setColor(v, 'green') }/>
+          <Slider value={ blue } onChange={ v => this.setColor(v, 'blue') }/>
+        </div>
+        <div className='row'>
+          <button className="btn btn-primary" onClick={ this.reset }>Reset</button>
         </div>
       </div>
     );
