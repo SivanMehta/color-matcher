@@ -45,13 +45,13 @@ export default class Slider extends PureComponent {
       <div>
         <h3 className='text-center'>{ color }</h3>
         <input
-        style={{ width: '100%' }}
-        type='range'
-        min='0'
-        max='250'
-        step='5'
-        value={ value }
-        onChange={ this.onChange }/>
+          className='slider'
+          type='range'
+          min='0'
+          max='250'
+          step='5'
+          value={ value }
+          onChange={ this.onChange }/>
         { this.svg() }
       </div>
     )
