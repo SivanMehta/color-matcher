@@ -3,7 +3,7 @@ import Square from './square';
 import Slider from './slider';
 
 function randomValue() {
-  return Math.floor((Math.random() * 255) / 10) * 10;
+  return Math.floor((Math.random() * 255) / 5) * 5;
 }
 
 function randomColor() {
@@ -26,18 +26,7 @@ export default class App extends PureComponent {
       goal
     };
 
-    this.reset = this.reset.bind(this);
     this.setColor = this.setColor.bind(this);
-  }
-
-  reset() {
-    const start = randomColor();
-    const goal = randomColor();
-
-    this.setState({
-      ...start,
-      goal
-    });
   }
 
   setColor(value, color) {
@@ -48,6 +37,7 @@ export default class App extends PureComponent {
 
   render() {
     const { goal, red, green, blue } = this.state;
+    const actual = { red, green, blue };
 
     return (
       <div className='container'>
@@ -59,16 +49,13 @@ export default class App extends PureComponent {
           </div>
           <div className='col-6'>
             <h2 className='text-center'>Actual</h2>
-            <Square height={ 100 } width={ 100 } color={ { red, green, blue } }/>
+            <Square height={ 100 } width={ 100 } color={ actual }/>
           </div>
         </div>
         <div>
-          <Slider value={ red } onChange={ v => this.setColor(v, 'red') }/>
-          <Slider value={ green } onChange={ v => this.setColor(v, 'green') }/>
-          <Slider value={ blue } onChange={ v => this.setColor(v, 'blue') }/>
-        </div>
-        <div className='row'>
-          <button className="btn btn-primary" onClick={ this.reset }>Reset</button>
+          <Slider color={ 'red' } actual={ actual } onChange={ v => this.setColor(v, 'red') }/>
+          <Slider color={ 'green' } actual={ actual } onChange={ v => this.setColor(v, 'green') }/>
+          <Slider color={ 'blue' } actual={ actual } onChange={ v => this.setColor(v, 'blue') }/>
         </div>
       </div>
     );

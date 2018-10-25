@@ -1,17 +1,10 @@
 import React, { PureComponent } from 'react';
+import { numsToColors } from './colors';
 
 export default class Square extends PureComponent {
-  toHex(value) {
-    return value.toString(16).padStart(2, '0');
-  }
-
-  numsToColors({ red, green, blue }) {
-    return `#${this.toHex(red)}${this.toHex(green)}${this.toHex(blue)}`;
-  }
-
   render() {
     const { width, height, color } = this.props;
-    const fill = this.numsToColors(color);
+    const fill = numsToColors(color);
     return (
       <svg viewBox={ `0 0 ${width} ${height}`} xmlns="http://www.w3.org/2000/svg">
         <rect
