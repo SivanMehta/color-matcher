@@ -35,13 +35,21 @@ export default class App extends PureComponent {
     });
   }
 
+  renderTitle(matched) {
+    return matched ?
+      <span className='text-success'>Matched Colors!</span> :
+      <span className='text-primary'>matching colors...</span>
+  }
+
   render() {
     const { goal, red, green, blue } = this.state;
     const actual = { red, green, blue };
 
+    const matched = goal.red === red && goal.blue === blue && goal.green === blue;
+
     return (
       <div className='container'>
-        <h1 className='text-center'>Match the Colors!</h1>
+        <h1 className='text-center'>{ this.renderTitle(matched) }</h1>
         <div className='row'>
           <div className='col-6'>
             <h2 className='text-center'>Expected</h2>
