@@ -7,25 +7,20 @@ module.exports = {
   ],
   mode: 'development',
   module: {
-    rules: [
-    {
+    rules: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      use: [
-        {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/env', '@babel/react']
-          }
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/env', '@babel/react']
         }
-      ],
-    }
-    ]
+      }],
+    }]
   },
   resolve: { extensions: ['.js', '.jsx'] },
   output: {
     path: path.resolve(__dirname, 'dist/'),
     filename: 'build.js'
-  },
-  plugins: process.env.NODE_ENV === 'production' ?  [] : [new webpack.HotModuleReplacementPlugin()]
+  }
 };

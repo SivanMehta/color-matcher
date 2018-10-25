@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
     "build:watch": "webpack --watch",
     "start": "http-server"
   },
@@ -30,6 +31,7 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "http-server": "^0.11.1",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
