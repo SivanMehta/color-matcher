@@ -49,7 +49,7 @@ export default class Slider extends PureComponent {
           type='range'
           min='0'
           max='250'
-          step='5'
+          step='10'
           value={ value }
           onChange={ this.onChange }/>
         { this.svg() }

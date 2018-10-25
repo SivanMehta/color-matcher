@@ -3,7 +3,7 @@ import Square from './square';
 import Slider from './slider';
 
 function randomValue() {
-  return Math.floor((Math.random() * 255) / 5) * 5;
+  return Math.floor((Math.random() * 255) / 10) * 10;
 }
 
 function randomColor() {
@@ -45,7 +45,9 @@ export default class App extends PureComponent {
     const { goal, red, green, blue } = this.state;
     const actual = { red, green, blue };
 
-    const matched = goal.red === red && goal.blue === blue && goal.green === blue;
+    const matched = goal.red === red &&
+      goal.blue === blue &&
+      goal.green === green;
 
     return (
       <div className='container'>
