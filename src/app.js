@@ -31,14 +31,14 @@ export default class App extends PureComponent {
 
   setColor(value, color) {
     this.setState({
-      [color]: parseInt(value)
+      [color]: parseInt(value, 10)
     });
   }
 
   renderTitle(matched) {
     return matched ?
       <span className='text-success'>Matched Colors!</span> :
-      <span className='text-primary'>matching colors...</span>
+      <span className='text-secondary'>matching colors...</span>;
   }
 
   render() {
@@ -63,9 +63,9 @@ export default class App extends PureComponent {
           </div>
         </div>
         <div>
-          <Slider color={ 'red' } value={ red } actual={ actual } onChange={ v => this.setColor(v, 'red') }/>
-          <Slider color={ 'green' } value={ green } actual={ actual } onChange={ v => this.setColor(v, 'green') }/>
-          <Slider color={ 'blue' } value={ blue } actual={ actual } onChange={ v => this.setColor(v, 'blue') }/>
+          <Slider color='red' value={ red } actual={ actual } onChange={ v => this.setColor(v, 'red') }/>
+          <Slider color='green' value={ green } actual={ actual } onChange={ v => this.setColor(v, 'green') }/>
+          <Slider color='blue' value={ blue } actual={ actual } onChange={ v => this.setColor(v, 'blue') }/>
         </div>
       </div>
     );
