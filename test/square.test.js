@@ -24,15 +24,15 @@ describe('Square', function () {
 
   it('should set the viewbox correctly', function () {
     const viewBox = square.find('svg').prop('viewBox');
-    assume(viewBox).equals('0 0 100 200');
+    assume(viewBox).equals(`0 0 ${props.width} ${props.height}`);
   });
 
   it('should set the correct height and width', function () {
     const height = square.find('rect').prop('height');
     const width = square.find('rect').prop('width');
 
-    assume(height).equals(200);
-    assume(width).equals(100);
+    assume(height).equals(props.height);
+    assume(width).equals(props.width);
   });
 
   it('should set the correct fill', function () {
