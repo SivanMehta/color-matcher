@@ -11,7 +11,9 @@ const props = {
   },
   red: 16,
   green: 32,
-  blue: 48
+  blue: 48,
+  onHint: () => {},
+  timeout: 1000
 };
 
 function renderApp(extras = {}) {

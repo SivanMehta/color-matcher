@@ -8,7 +8,7 @@ import { setColor, resetColors, cheat, hint } from './redux/actions';
 
 export class App extends PureComponent {
   componentDidMount() {
-    setTimeout(this.props.onHint, 15 * 1000);
+    setTimeout(this.props.onHint, this.props.timeout);
   }
 
   renderTitle(matched) {
@@ -20,7 +20,7 @@ export class App extends PureComponent {
   render() {
     const {
       goal, red, green, blue, cheated, cheating,
-      onSetColor, onResetColors, onCheat, onHint
+      onSetColor, onResetColors, onCheat
     } = this.props;
     const actual = { red, green, blue };
 
@@ -50,7 +50,11 @@ export class App extends PureComponent {
         <br />
         <div>
           <button className='btn btn-primary btn-lg' onClick={ onResetColors }>Scramble Colors</button>
-          { cheating && <button className='btn btn-danger btn-lg' onClick={ onCheat }>{ cheated ? 'You Cheater!' : 'Need Some Help?' }</button> }
+          { cheating && (
+            <button className='btn btn-danger btn-lg' onClick={ onCheat }>
+              { cheated ? 'You Cheater!' : 'Need Some Help?' }
+            </button>
+          )}
         </div>
       </div>
     );
@@ -62,10 +66,18 @@ App.propTypes = {
   red: PropTypes.number,
   green: PropTypes.number,
   blue: PropTypes.number,
+  timeout: PropTypes.number,
+  cheated: PropTypes.bool,
+  cheating: PropTypes.bool,
 
   onSetColor: PropTypes.func,
   onResetColors: PropTypes.func,
-  cheated: PropTypes.bool
+  onCheat: PropTypes.func,
+  onHint: PropTypes.func
+};
+
+App.defaultProps = {
+  timeout: 1000 * 15
 };
 
 export default connect(
