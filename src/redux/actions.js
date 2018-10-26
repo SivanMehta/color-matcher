@@ -20,3 +20,10 @@ export function cheat() {
     type: CHEAT
   };
 }
+
+export const HINT = 'HINT';
+export function hint() {
+  return {
+    type: HINT
+  };
+}

@@ -4,18 +4,11 @@ import { connect } from 'react-redux';
 import { colorShape } from './utils';
 import Square from './square';
 import Slider from './slider';
-import { setColor, resetColors, cheat } from './redux/actions';
+import { setColor, resetColors, cheat, hint } from './redux/actions';
 
 export class App extends PureComponent {
-  constructor() {
-    super(...arguments);
-    this.state = {
-      cheating: false
-    }
-  }
-
   componentDidMount() {
-    setTimeout(() => this.setState({ cheating: true }), 3 * 1000)
+    setTimeout(this.props.onHint, 15 * 1000);
   }
 
   renderTitle(matched) {
@@ -25,9 +18,11 @@ export class App extends PureComponent {
   }
 
   render() {
-    const { goal, red, green, blue, onSetColor, onResetColors, onCheat, cheated } = this.props;
+    const {
+      goal, red, green, blue, cheated, cheating,
+      onSetColor, onResetColors, onCheat, onHint
+    } = this.props;
     const actual = { red, green, blue };
-    const { cheating } = this.state;
 
     const matched = goal.red === red &&
       goal.blue === blue &&
@@ -81,14 +76,16 @@ export default connect(
       blue: state.blue,
 
       goal: state.goal,
-      cheated: state.cheated
+      cheated: state.cheated,
+      cheating: state.cheating
     };
   },
   function mapDispatchToProps(dispatch) {
     return {
       onSetColor: (value, color) => dispatch(setColor(value, color)),
       onResetColors: () => dispatch(resetColors()),
-      onCheat: () => dispatch(cheat())
+      onCheat: () => dispatch(cheat()),
+      onHint: () => dispatch(hint())
     };
   }
 )(App);

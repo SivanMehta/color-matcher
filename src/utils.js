@@ -19,7 +19,8 @@ export function initialState() {
   return {
     ...start,
     goal,
-    cheated: false
+    cheated: false,
+    cheating: false
   };
 }
 
