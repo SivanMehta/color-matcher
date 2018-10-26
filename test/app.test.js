@@ -1,51 +1,55 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import assume from 'assume';
-import App from '../src/app';
+import { App } from '../src/app';
+
+const props = {
+  goal: {
+    red: 32,
+    green: 48,
+    blue: 160
+  },
+  red: 16,
+  green: 32,
+  blue: 48
+};
+
+function renderApp(extras = {}) {
+  return mount(<App { ...{ ...props, ...extras } }/>);
+}
 
 describe('App Layout', function () {
-  let app;
-  before(function () {
-    app = mount(<App />);
-  });
-  after(function () {
-    app.unmount();
-  });
-
-  it('should have two colors set initally', function () {
-    const state = app.state();
-
-    assume(state.red).exists();
-    assume(state.goal.red).exists();
-    assume(state.green).exists();
-    assume(state.goal.green).exists();
-    assume(state.blue).exists();
-    assume(state.goal.blue).exists();
-  });
-
   it('should have the correct title', function () {
-    const state = app.state();
+    const app = renderApp();
     const different = [
-      [state.red, state.goal.red],
-      [state.green, state.goal.green],
-      [state.blue, state.goal.blue]
+      [props.red, props.goal.red],
+      [props.green, props.goal.green],
+      [props.blue, props.goal.blue]
     ].some(([actual, expected]) => actual === expected);
     const title = app.find(`h1 span.text-${different ? 'secondary' : 'success'}`);
     assume(title).exists();
   });
 
   it('should update the title when the colors match', function () {
-    const goal = app.state().goal;
-    app.setState({ ...goal });
+    const app = renderApp({ ...props.goal });
     const title = app.find('h1 span.text-success').text();
     assume(title).equals('Matched Colors!');
   });
 
-  it('should update the actual color when a slider changes', function () {
-    const slider = app.find('input').first();
-    const destination = -1000;
-    slider.simulate('change', {target: {value: destination}});
+  it('should update the actual color when a slider changes', function (done) {
+    const destination = {
+      color: 'red',
+      value: -100
+    };
 
-    assume(app.state('red')).equals(destination);
+    function onSetColor(value, color) {
+      assume(value).equals(destination.value);
+      assume(color).equals(destination.color);
+      done();
+    }
+
+    const app = renderApp({ onSetColor });
+    const slider = app.find('input').first();
+    slider.simulate('change', { target: { value: destination.value }});
   });
 });

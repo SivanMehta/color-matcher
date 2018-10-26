@@ -1,40 +1,12 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { colorShape } from './colors';
 import Square from './square';
 import Slider from './slider';
+import { setColor, resetColors } from './redux/actions';
 
-function randomValue() {
-  return Math.floor((Math.random() * 255) / 10) * 10;
-}
-
-function randomColor() {
-  return {
-    red: randomValue(),
-    green: randomValue(),
-    blue: randomValue()
-  };
-}
-
-export default class App extends PureComponent {
-  constructor() {
-    super(...arguments);
-
-    const start = randomColor();
-    const goal = randomColor();
-
-    this.state = {
-      ...start,
-      goal
-    };
-
-    this.setColor = this.setColor.bind(this);
-  }
-
-  setColor(value, color) {
-    this.setState({
-      [color]: parseInt(value, 10)
-    });
-  }
-
+export class App extends PureComponent {
   renderTitle(matched) {
     return matched ?
       <span className='text-success'>Matched Colors!</span> :
@@ -42,7 +14,7 @@ export default class App extends PureComponent {
   }
 
   render() {
-    const { goal, red, green, blue } = this.state;
+    const { goal, red, green, blue, onSetColor, onResetColors } = this.props;
     const actual = { red, green, blue };
 
     const matched = goal.red === red &&
@@ -63,11 +35,44 @@ export default class App extends PureComponent {
           </div>
         </div>
         <div>
-          <Slider color='red' value={ red } actual={ actual } onChange={ v => this.setColor(v, 'red') }/>
-          <Slider color='green' value={ green } actual={ actual } onChange={ v => this.setColor(v, 'green') }/>
-          <Slider color='blue' value={ blue } actual={ actual } onChange={ v => this.setColor(v, 'blue') }/>
+          <Slider color='red' value={ red } actual={ actual } onChange={ v => onSetColor(v, 'red') }/>
+          <Slider color='green' value={ green } actual={ actual } onChange={ v => onSetColor(v, 'green') }/>
+          <Slider color='blue' value={ blue } actual={ actual } onChange={ v => onSetColor(v, 'blue') }/>
+        </div>
+
+        <br />
+        <div>
+          <button className='btn btn-primary btn-lg' onClick={ onResetColors }>Scramble Colors</button>
         </div>
       </div>
     );
   }
 }
+
+App.propTypes = {
+  goal: colorShape,
+  red: PropTypes.number,
+  green: PropTypes.number,
+  blue: PropTypes.number,
+
+  onSetColor: PropTypes.func,
+  onResetColors: PropTypes.func
+};
+
+export default connect(
+  function mapStateToProps(state) {
+    return {
+      red: state.red,
+      green: state.green,
+      blue: state.blue,
+
+      goal: state.goal
+    };
+  },
+  function mapDispatchToProps(dispatch) {
+    return {
+      onSetColor: (value, color) => dispatch(setColor(value, color)),
+      onResetColors: () => dispatch(resetColors())
+    };
+  }
+)(App);
