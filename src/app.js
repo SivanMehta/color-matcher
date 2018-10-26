@@ -63,9 +63,9 @@ export default class App extends PureComponent {
           </div>
         </div>
         <div>
-          <Slider color={ 'red' } value={ red } actual={ actual } onChange={ v => this.setColor(v, 'red') }/>
-          <Slider color={ 'green' } value={ green } actual={ actual } onChange={ v => this.setColor(v, 'green') }/>
-          <Slider color={ 'blue' } value={ blue } actual={ actual } onChange={ v => this.setColor(v, 'blue') }/>
+          <Slider color='red' value={ red } actual={ actual } onChange={ v => this.setColor(v, 'red') }/>
+          <Slider color='green' value={ green } actual={ actual } onChange={ v => this.setColor(v, 'green') }/>
+          <Slider color='blue' value={ blue } actual={ actual } onChange={ v => this.setColor(v, 'blue') }/>
         </div>
       </div>
     );
