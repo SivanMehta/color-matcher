@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { numsToColors, colorShape } from './colors';
+import { numsToColors, colorShape } from './utils';
 import PropTypes from 'prop-types';
 
 export default class Square extends PureComponent {

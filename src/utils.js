@@ -12,13 +12,15 @@ function randomColor() {
   };
 }
 
-export function randomColors() {
+export function initialState() {
   const start = randomColor();
   const goal = randomColor();
 
   return {
     ...start,
-    goal
+    goal,
+    cheated: false,
+    cheating: false
   };
 }
 
