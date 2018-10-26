@@ -42,13 +42,13 @@ describe('App Layout', function () {
       value: -100
     };
 
-    function setColor(value, color) {
+    function onSetColor(value, color) {
       assume(value).equals(destination.value);
       assume(color).equals(destination.color);
       done();
     }
 
-    const app = renderApp({ setColor });
+    const app = renderApp({ onSetColor });
     const slider = app.find('input').first();
     slider.simulate('change', { target: { value: destination.value }});
   });
