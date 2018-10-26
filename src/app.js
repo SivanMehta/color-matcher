@@ -1,18 +1,14 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import Square from './square';
 import Slider from './slider';
-import { randomColor } from './colors';
 
-export default class App extends PureComponent {
-  constructor() {
-    super(...arguments);
-
-    const start = randomColor();
-    const goal = randomColor();
+class App extends PureComponent {
+  constructor(props, ...args) {
+    super(props, ...args);
 
     this.state = {
-      ...start,
-      goal
+      ...props
     };
 
     this.setColor = this.setColor.bind(this);
@@ -60,3 +56,9 @@ export default class App extends PureComponent {
     );
   }
 }
+
+export default connect(
+  function mapStateToProps (state) {
+    return { ...state };
+  }
+)(App);
