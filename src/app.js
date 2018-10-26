@@ -1,18 +1,7 @@
 import React, { PureComponent } from 'react';
 import Square from './square';
 import Slider from './slider';
-
-function randomValue() {
-  return Math.floor((Math.random() * 255) / 10) * 10;
-}
-
-function randomColor() {
-  return {
-    red: randomValue(),
-    green: randomValue(),
-    blue: randomValue()
-  };
-}
+import { randomColor } from './colors';
 
 export default class App extends PureComponent {
   constructor() {
