@@ -4,7 +4,7 @@ import Square from './square';
 import Slider from './slider';
 import { setColor, resetColors } from './redux/actions';
 
-class App extends PureComponent {
+export class App extends PureComponent {
   renderTitle(matched) {
     return matched ?
       <span className='text-success'>Matched Colors!</span> :
@@ -49,7 +49,13 @@ class App extends PureComponent {
 
 export default connect(
   function mapStateToProps (state) {
-    return { ...state };
+    return {
+      red: state.red,
+      green: state.green,
+      blue: state.blue,
+
+      goal: state.goal
+    };
   },
   function mapDispatchToProps (dispatch) {
     return {
