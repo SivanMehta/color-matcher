@@ -7,6 +7,27 @@ import Slider from './slider';
 import { setColor, resetColors } from './redux/actions';
 
 export class App extends PureComponent {
+  constructor() {
+    super(...arguments)
+    this.state = {
+      cheating: false,
+      cheated: false
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ cheating: true }), 3 * 1000)
+  }
+
+  cheat() {
+    const { goal, onSetColor } = this.props;
+    ['red', 'blue', 'green'].forEach(color => {
+      onSetColor(goal[color], color);
+    });
+
+    this.setState({ cheated: true });
+  }
+
   renderTitle(matched) {
     return matched ?
       <span className='text-success'>Matched Colors!</span> :
@@ -16,6 +37,7 @@ export class App extends PureComponent {
   render() {
     const { goal, red, green, blue, onSetColor, onResetColors } = this.props;
     const actual = { red, green, blue };
+    const { cheating, cheated } = this.state;
 
     const matched = goal.red === red &&
       goal.blue === blue &&
@@ -43,6 +65,7 @@ export class App extends PureComponent {
         <br />
         <div>
           <button className='btn btn-primary btn-lg' onClick={ onResetColors }>Scramble Colors</button>
+          { cheating && <button className='btn btn-danger btn-lg' onClick={ this.cheat.bind(this) }>{ cheated ? 'You Cheater!' : 'Need Some Help?' }</button> }
         </div>
       </div>
     );
