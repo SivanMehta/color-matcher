@@ -31,14 +31,14 @@ export default class App extends PureComponent {
 
   setColor(value, color) {
     this.setState({
-      [color]: parseInt(value)
+      [color]: parseInt(value, 10)
     });
   }
 
   renderTitle(matched) {
     return matched ?
       <span className='text-success'>Matched Colors!</span> :
-      <span className='text-primary'>matching colors...</span>
+      <span className='text-secondary'>matching colors...</span>;
   }
 
   render() {

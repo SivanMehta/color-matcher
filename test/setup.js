@@ -2,7 +2,7 @@ require('enzyme/withDom');
 require('@babel/register')({
   presets: [[
     '@babel/preset-env',
-    { targets: { node: true } }
+    { targets: { node: true }}
   ]]
 });
 const Enzyme = require('enzyme');
