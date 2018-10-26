@@ -1,14 +1,8 @@
 import { createStore } from 'redux';
 import reducer from './reducer';
-import { randomColor } from '../colors';
+import { randomColors } from '../colors';
 
-const start = randomColor();
-const goal = randomColor();
-
-const initialState = {
-  ...start,
-  goal
-};
+const initialState = randomColors();
 
 const store = createStore(
   reducer,

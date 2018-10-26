@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Square from './square';
 import Slider from './slider';
-import { setColor } from './redux/actions';
+import { setColor, resetColors } from './redux/actions';
 
 class App extends PureComponent {
   renderTitle(matched) {
@@ -12,7 +12,7 @@ class App extends PureComponent {
   }
 
   render() {
-    const { goal, red, green, blue, setColor } = this.props;
+    const { goal, red, green, blue, setColor, resetColors } = this.props;
     const actual = { red, green, blue };
 
     const matched = goal.red === red &&
@@ -37,6 +37,11 @@ class App extends PureComponent {
           <Slider color='green' value={ green } actual={ actual } onChange={ v => setColor(v, 'green') }/>
           <Slider color='blue' value={ blue } actual={ actual } onChange={ v => setColor(v, 'blue') }/>
         </div>
+
+        <br />
+        <div>
+          <button className="btn btn-primary btn-lg" onClick={ resetColors }>Scramble Colors</button>
+        </div>
       </div>
     );
   }
@@ -48,7 +53,8 @@ export default connect(
   },
   function mapDispatchToProps (dispatch) {
     return {
-      setColor: (value, color) => dispatch(setColor(value, color))
+      setColor: (value, color) => dispatch(setColor(value, color)),
+      resetColors: () => dispatch(resetColors())
     }
   }
 )(App);
