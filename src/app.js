@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { colorShape } from './colors';
 import Square from './square';
 import Slider from './slider';
 import { setColor, resetColors } from './redux/actions';
@@ -12,7 +14,7 @@ export class App extends PureComponent {
   }
 
   render() {
-    const { goal, red, green, blue, setColor, resetColors } = this.props;
+    const { goal, red, green, blue, onSetColor, onResetColors } = this.props;
     const actual = { red, green, blue };
 
     const matched = goal.red === red &&
@@ -33,22 +35,32 @@ export class App extends PureComponent {
           </div>
         </div>
         <div>
-          <Slider color='red' value={ red } actual={ actual } onChange={ v => setColor(v, 'red') }/>
-          <Slider color='green' value={ green } actual={ actual } onChange={ v => setColor(v, 'green') }/>
-          <Slider color='blue' value={ blue } actual={ actual } onChange={ v => setColor(v, 'blue') }/>
+          <Slider color='red' value={ red } actual={ actual } onChange={ v => onSetColor(v, 'red') }/>
+          <Slider color='green' value={ green } actual={ actual } onChange={ v => onSetColor(v, 'green') }/>
+          <Slider color='blue' value={ blue } actual={ actual } onChange={ v => onSetColor(v, 'blue') }/>
         </div>
 
         <br />
         <div>
-          <button className="btn btn-primary btn-lg" onClick={ resetColors }>Scramble Colors</button>
+          <button className='btn btn-primary btn-lg' onClick={ onResetColors }>Scramble Colors</button>
         </div>
       </div>
     );
   }
 }
 
+App.propTypes = {
+  goal: colorShape,
+  red: PropTypes.number,
+  green: PropTypes.number,
+  blue: PropTypes.number,
+
+  onSetColor: PropTypes.func,
+  onResetColors: PropTypes.func
+};
+
 export default connect(
-  function mapStateToProps (state) {
+  function mapStateToProps(state) {
     return {
       red: state.red,
       green: state.green,
@@ -57,10 +69,10 @@ export default connect(
       goal: state.goal
     };
   },
-  function mapDispatchToProps (dispatch) {
+  function mapDispatchToProps(dispatch) {
     return {
-      setColor: (value, color) => dispatch(setColor(value, color)),
-      resetColors: () => dispatch(resetColors())
-    }
+      onSetColor: (value, color) => dispatch(setColor(value, color)),
+      onResetColors: () => dispatch(resetColors())
+    };
   }
 )(App);

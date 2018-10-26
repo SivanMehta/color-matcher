@@ -15,14 +15,14 @@ const defaultProps = {
 };
 
 function renderSlider(props = {}) {
-  return mount(<Slider { ...{...defaultProps, ...props} }/>);
+  return mount(<Slider { ...{ ...defaultProps, ...props } }/>);
 }
 
 describe('Slider', function () {
   it('should use the correct color as a title', function () {
     const slider = renderSlider();
     const title = slider.find('h3').text();
-    assume(title).equals(defaultProps.color)
+    assume(title).equals(defaultProps.color);
   });
 
   it('should have the correct color gradient range', function () {
@@ -45,6 +45,6 @@ describe('Slider', function () {
 
     const slider = renderSlider({ onChange });
     const input = slider.find('input');
-    input.simulate('change', {target: {value: destination}});
+    input.simulate('change', { target: { value: destination }});
   });
 });

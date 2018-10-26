@@ -7,7 +7,7 @@ export function setColor(value, color) {
   };
 }
 
-export const RESET_COLORS = 'RESET_COLORS'
+export const RESET_COLORS = 'RESET_COLORS';
 export function resetColors() {
   return {
     type: RESET_COLORS

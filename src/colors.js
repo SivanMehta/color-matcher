@@ -12,7 +12,7 @@ function randomColor() {
   };
 }
 
-export function randomColors () {
+export function randomColors() {
   const start = randomColor();
   const goal = randomColor();
 

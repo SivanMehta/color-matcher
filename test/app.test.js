@@ -15,13 +15,12 @@ const props = {
 };
 
 function renderApp(extras = {}) {
-  return mount(<App { ...{...props, ...extras} }/>);
+  return mount(<App { ...{ ...props, ...extras } }/>);
 }
 
 describe('App Layout', function () {
   it('should have the correct title', function () {
     const app = renderApp();
-    const state = app.props();
     const different = [
       [props.red, props.goal.red],
       [props.green, props.goal.green],
@@ -49,8 +48,8 @@ describe('App Layout', function () {
       done();
     }
 
-    const app = renderApp({ setColor })
+    const app = renderApp({ setColor });
     const slider = app.find('input').first();
-    slider.simulate('change', {target: {value: destination.value}});
+    slider.simulate('change', { target: { value: destination.value }});
   });
 });
