@@ -13,3 +13,10 @@ export function resetColors() {
     type: RESET_COLORS
   };
 }
+
+export const CHEAT = 'CHEAT';
+export function cheat() {
+  return {
+    type: CHEAT
+  };
+}

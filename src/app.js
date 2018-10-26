@@ -4,28 +4,18 @@ import { connect } from 'react-redux';
 import { colorShape } from './colors';
 import Square from './square';
 import Slider from './slider';
-import { setColor, resetColors } from './redux/actions';
+import { setColor, resetColors, cheat } from './redux/actions';
 
 export class App extends PureComponent {
   constructor() {
     super(...arguments)
     this.state = {
-      cheating: false,
-      cheated: false
+      cheating: false
     };
   }
 
   componentDidMount() {
     setTimeout(() => this.setState({ cheating: true }), 3 * 1000)
-  }
-
-  cheat() {
-    const { goal, onSetColor } = this.props;
-    ['red', 'blue', 'green'].forEach(color => {
-      onSetColor(goal[color], color);
-    });
-
-    this.setState({ cheated: true });
   }
 
   renderTitle(matched) {
@@ -35,7 +25,7 @@ export class App extends PureComponent {
   }
 
   render() {
-    const { goal, red, green, blue, onSetColor, onResetColors } = this.props;
+    const { goal, red, green, blue, onSetColor, onResetColors, onCheat } = this.props;
     const actual = { red, green, blue };
     const { cheating, cheated } = this.state;
 
@@ -65,7 +55,7 @@ export class App extends PureComponent {
         <br />
         <div>
           <button className='btn btn-primary btn-lg' onClick={ onResetColors }>Scramble Colors</button>
-          { cheating && <button className='btn btn-danger btn-lg' onClick={ this.cheat.bind(this) }>{ cheated ? 'You Cheater!' : 'Need Some Help?' }</button> }
+          { cheating && <button className='btn btn-danger btn-lg' onClick={ onCheat }>{ cheated ? 'You Cheater!' : 'Need Some Help?' }</button> }
         </div>
       </div>
     );
@@ -95,7 +85,8 @@ export default connect(
   function mapDispatchToProps(dispatch) {
     return {
       onSetColor: (value, color) => dispatch(setColor(value, color)),
-      onResetColors: () => dispatch(resetColors())
+      onResetColors: () => dispatch(resetColors()),
+      onCheat: () => dispatch(cheat())
     };
   }
 )(App);
