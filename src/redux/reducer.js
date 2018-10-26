@@ -4,13 +4,13 @@ import { initialState } from '../utils';
 export default function (state = {}, action) {
   switch (action.type) {
     case SET_COLOR:
-      return Object.assign({}, { [action.color]: parseInt(action.value, 10) });
+      return Object.assign({}, state, { [action.color]: parseInt(action.value, 10) });
     case RESET_COLORS:
       return initialState();
     case HINT:
-      return Object.assign({}, { cheating: true });
+      return Object.assign({}, state, { cheating: true });
     case CHEAT:
-      return Object.assign({}, { ...state.goal, cheated: true });
+      return Object.assign({}, state, { ...state.goal, cheated: true });
     default:
       return state;
   }
