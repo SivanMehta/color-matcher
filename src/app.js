@@ -2,24 +2,9 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Square from './square';
 import Slider from './slider';
+import { setColor } from './redux/actions';
 
 class App extends PureComponent {
-  constructor(props, ...args) {
-    super(props, ...args);
-
-    this.state = {
-      ...props
-    };
-
-    this.setColor = this.setColor.bind(this);
-  }
-
-  setColor(value, color) {
-    this.setState({
-      [color]: parseInt(value, 10)
-    });
-  }
-
   renderTitle(matched) {
     return matched ?
       <span className='text-success'>Matched Colors!</span> :
@@ -27,7 +12,7 @@ class App extends PureComponent {
   }
 
   render() {
-    const { goal, red, green, blue } = this.state;
+    const { goal, red, green, blue, setColor } = this.props;
     const actual = { red, green, blue };
 
     const matched = goal.red === red &&
@@ -48,9 +33,9 @@ class App extends PureComponent {
           </div>
         </div>
         <div>
-          <Slider color='red' value={ red } actual={ actual } onChange={ v => this.setColor(v, 'red') }/>
-          <Slider color='green' value={ green } actual={ actual } onChange={ v => this.setColor(v, 'green') }/>
-          <Slider color='blue' value={ blue } actual={ actual } onChange={ v => this.setColor(v, 'blue') }/>
+          <Slider color='red' value={ red } actual={ actual } onChange={ v => setColor(v, 'red') }/>
+          <Slider color='green' value={ green } actual={ actual } onChange={ v => setColor(v, 'green') }/>
+          <Slider color='blue' value={ blue } actual={ actual } onChange={ v => setColor(v, 'blue') }/>
         </div>
       </div>
     );
@@ -60,5 +45,10 @@ class App extends PureComponent {
 export default connect(
   function mapStateToProps (state) {
     return { ...state };
+  },
+  function mapDispatchToProps (dispatch) {
+    return {
+      setColor: (value, color) => dispatch(setColor(value, color))
+    }
   }
 )(App);
