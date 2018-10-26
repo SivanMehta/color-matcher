@@ -1,12 +1,12 @@
 import { createStore } from 'redux';
 import reducer from './reducer';
-import { randomColors } from '../colors';
+import { initialState } from '../utils';
 
-const initialState = randomColors();
+const startingState = initialState();
 
 const store = createStore(
   reducer,
-  initialState,
+  startingState,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

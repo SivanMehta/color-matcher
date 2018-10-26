@@ -1,17 +1,17 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { colorShape } from './colors';
+import { colorShape } from './utils';
 import Square from './square';
 import Slider from './slider';
 import { setColor, resetColors, cheat } from './redux/actions';
 
 export class App extends PureComponent {
   constructor() {
-    super(...arguments)
+    super(...arguments);
     this.state = {
       cheating: false
-    };
+    }
   }
 
   componentDidMount() {
@@ -25,9 +25,9 @@ export class App extends PureComponent {
   }
 
   render() {
-    const { goal, red, green, blue, onSetColor, onResetColors, onCheat } = this.props;
+    const { goal, red, green, blue, onSetColor, onResetColors, onCheat, cheated } = this.props;
     const actual = { red, green, blue };
-    const { cheating, cheated } = this.state;
+    const { cheating } = this.state;
 
     const matched = goal.red === red &&
       goal.blue === blue &&
@@ -69,7 +69,8 @@ App.propTypes = {
   blue: PropTypes.number,
 
   onSetColor: PropTypes.func,
-  onResetColors: PropTypes.func
+  onResetColors: PropTypes.func,
+  cheated: PropTypes.bool
 };
 
 export default connect(
@@ -79,7 +80,8 @@ export default connect(
       green: state.green,
       blue: state.blue,
 
-      goal: state.goal
+      goal: state.goal,
+      cheated: state.cheated
     };
   },
   function mapDispatchToProps(dispatch) {
