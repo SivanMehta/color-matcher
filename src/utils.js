@@ -37,3 +37,9 @@ export const colorShape = PropTypes.shape({
   blue: PropTypes.number,
   green: PropTypes.number
 });
+
+export function matched(goal, actual) {
+  return goal.red === actual.red &&
+    goal.blue === actual.blue &&
+    goal.green === actual.green;
+}
