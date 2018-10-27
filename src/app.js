@@ -1,18 +1,26 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { colorShape } from './utils';
+import { colorShape, matched } from './utils';
 import Square from './square';
 import Slider from './slider';
+import Distance from './distance';
 import { setColor, resetColors, cheat, hint } from './redux/actions';
 
 export class App extends PureComponent {
   componentDidMount() {
-    setTimeout(this.props.onHint, this.props.timeout);
+    setTimeout(() => {
+      const won = matched(this.props.goal, this.props);
+
+      if (!won) {
+        this.props.onHint();
+      }
+
+    }, this.props.timeout);
   }
 
-  renderTitle(matched) {
-    return matched ?
+  renderTitle(won) {
+    return won ?
       <span className='text-success'>Matched Colors!</span> :
       <span className='text-secondary'>matching colors...</span>;
   }
@@ -22,15 +30,13 @@ export class App extends PureComponent {
       goal, red, green, blue, cheated, cheating,
       onSetColor, onResetColors, onCheat
     } = this.props;
-    const actual = { red, green, blue };
 
-    const matched = goal.red === red &&
-      goal.blue === blue &&
-      goal.green === green;
+    const actual = { red, green, blue };
+    const won = matched(goal, actual);
 
     return (
       <div className='container'>
-        <h1 className='text-center'>{ this.renderTitle(matched) }</h1>
+        <h1 className='text-center'>{ this.renderTitle(won) }</h1>
         <div className='row'>
           <div className='col-6'>
             <h2 className='text-center'>Expected</h2>
@@ -48,13 +54,18 @@ export class App extends PureComponent {
         </div>
 
         <br />
-        <div>
-          <button className='btn btn-primary btn-lg' onClick={ onResetColors }>Scramble Colors</button>
-          { cheating && (
-            <button className='btn btn-danger btn-lg' onClick={ onCheat }>
-              { cheated ? 'You Cheater!' : 'Need Some Help?' }
-            </button>
-          )}
+        <div className='row'>
+          <div className='col-2'>
+            <button className='btn btn-primary btn-lg' onClick={ onResetColors }>Scramble Colors</button>
+            { cheating && (
+              <button className='btn btn-danger btn-lg' onClick={ onCheat }>
+                { cheated ? 'You Cheater!' : 'Need Some Help?' }
+              </button>
+            )}
+          </div>
+          <div className='col-2 offset-8'>
+            <Distance actual={ actual } goal={ goal }/>
+          </div>
         </div>
       </div>
     );
