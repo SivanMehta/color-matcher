@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import { colorShape } from './utils';
 
 const max = 255;
@@ -11,6 +11,7 @@ export default class Distance extends PureComponent {
 
     return (
       <rect
+        key={ `distance-${i}` }
         x={ max - width } y={ height * i }
         width={ width } height={ height }
         fill={ color }
@@ -19,17 +20,16 @@ export default class Distance extends PureComponent {
   }
 
   render() {
-    const { actual, goal } = this.props;
-    const bars = ['red', 'green', 'blue'].map(this.bar.bind(this))
+    const bars = ['red', 'green', 'blue'].map(this.bar.bind(this));
     return (
       <svg viewBox={ `0 0 255 30` } xmlns='http://www.w3.org/2000/svg'>
-         { bars }
+        { bars }
       </svg>
-    )
+    );
   }
 }
 
 Distance.propTypes = {
   actual: colorShape,
-  goal: colorShape,
+  goal: colorShape
 };

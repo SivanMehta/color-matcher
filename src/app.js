@@ -12,7 +12,7 @@ export class App extends PureComponent {
     setTimeout(() => {
       const won = matched(this.props.goal, this.props);
 
-      if(!won) {
+      if (!won) {
         this.props.onHint();
       }
 
