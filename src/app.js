@@ -56,7 +56,7 @@ export class App extends PureComponent {
         <br />
         <div className='row'>
           <div className='col-2'>
-            <button className='btn btn-primary btn-lg' onClick={ onResetColors }>Scramble Colors</button>
+            <button className='btn btn-primary btn-lg' onClick={ onResetColors }>Scramble Colors!</button>
             { cheating && (
               <button className='btn btn-danger btn-lg' onClick={ onCheat }>
                 { cheated ? 'You Cheater!' : 'Need Some Help?' }
